@@ -1,28 +1,9 @@
-import type { Route } from "./+types/home";
-import { Article, type ArticleJson } from "~/domain/Article";
+import type { Route } from "./+types/index";
 import BlogCard from "~/components/BlogCard";
 import { motion } from "framer-motion";
+import { homeLoader } from "./loader"
 
-export async function loader({ params }: Route.LoaderArgs) {
-  const res = await fetch(`https://qiita.com/api/v2/authenticated_user/items`, {
-    headers: {
-      Authorization: `Bearer ${process.env.QIITA_API_KEY}`,
-    },
-  });
-  const articlesJson: ArticleJson[] = await res.json();
-  const articles = articlesJson.map(
-    (articleJson) =>
-      new Article(
-        articleJson.title,
-        articleJson.url,
-        articleJson.likes_count,
-        articleJson.stocks_count,
-        articleJson.created_at
-      )
-  );
-
-  return { articles };
-}
+export const loader = homeLoader
 
 export default function Home({ loaderData }: Route.ComponentProps) {
   const { articles } = loaderData;

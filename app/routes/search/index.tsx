@@ -1,64 +1,15 @@
 import { Article, type ArticleJson } from "~/domain/Article";
-import type { Route } from "./+types/search";
 import { useEffect, useRef } from "react";
 import { useFetcher, useLoaderData } from "react-router";
 import { SearchIcon } from "lucide-react";
 import BlogCardWithFavorite from "~/components/BlogCardWithFavorite";
 import { motion } from "framer-motion";
+import { searchLoader } from "./loader";
+import { searchAction } from "./action";
 
-async function fetchArticles(keywords?: string) {
-  const query = keywords
-    ? `user:Sicut_study+title:${keywords}`
-    : "user:Sicut_study";
+export const loader = searchLoader
+export const action = searchAction
 
-  const res = await fetch(
-    `https://qiita.com/api/v2/items?page=1&per_page=20&query=${query}`,
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.QIITA_API_KEY}`,
-      },
-    }
-  );
-  const articlesJson: ArticleJson[] = await res.json();
-  const articles = articlesJson.map(
-    (articleJson) =>
-      new Article(
-        articleJson.title,
-        articleJson.url,
-        articleJson.likes_count,
-        articleJson.stocks_count,
-        articleJson.created_at
-      )
-  );
-
-  return { articles };
-}
-
-export async function loader({ params }: Route.LoaderArgs) {
-  const { articles } = await fetchArticles();
-  return { articles };
-}
-
-export async function action({ request }: Route.ClientActionArgs) {
-  const formData = await request.formData();
-  const { _action } = Object.fromEntries(formData);
-
-  switch (_action) {
-    case "search": {
-      const keywords = formData.get("keywords") as string;
-      const { articles } = await fetchArticles(keywords);
-      return { articles };
-    }
-
-    case "like": {
-      const title = formData.get("title");
-      console.log(`${title}をお気に入り登録しました`);
-
-      const { articles } = await fetchArticles();
-      return { articles };
-    }
-  }
-}
 
 export default function Search() {
   const formRef = useRef<HTMLFormElement>(null);
