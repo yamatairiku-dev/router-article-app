@@ -1,12 +1,12 @@
-import type { Route } from "./+types/index";
-import BlogCard from "~/components/BlogCard";
-import { motion } from "framer-motion";
-import { homeLoader } from "./loader"
+import type { Route } from './+types/index'
+import BlogCard from '~/components/BlogCard'
+import { motion } from 'framer-motion'
+import { homeLoader } from './loader'
 
 export const loader = homeLoader
 
 export default function Home({ loaderData }: Route.ComponentProps) {
-  const { articles } = loaderData;
+  const { articles } = loaderData
   return (
     <div className="flex-1 sm:ml-64">
       <motion.div
@@ -15,7 +15,9 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         transition={{ duration: 0.5 }}
         className="container mx-auto px-4 py-8"
       >
-        <h2 className="mb-6 text-3xl font-bold text-gray-800">記事一覧</h2>
+        <h2 className="mb-6 text-3xl font-bold text-gray-800 dark:text-gray-200">
+          記事一覧
+        </h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {articles.map((article) => (
             <BlogCard key={article.url} article={article} />
@@ -23,5 +25,5 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         </div>
       </motion.div>
     </div>
-  );
+  )
 }

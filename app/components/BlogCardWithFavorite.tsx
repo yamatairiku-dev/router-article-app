@@ -1,22 +1,22 @@
-import { motion } from "framer-motion";
-import { Heart, Bookmark, Star } from "lucide-react";
-import { Article } from "~/domain/Article";
-import { format } from "date-fns";
-import { ja } from "date-fns/locale";
+import { motion } from 'framer-motion'
+import { Heart, Bookmark, Star } from 'lucide-react'
+import { Article } from '~/domain/Article'
+import { format } from 'date-fns'
+import { ja } from 'date-fns/locale'
 
 type Props = {
-  article: Article;
-};
+  article: Article
+}
 
 export default function BlogCardWithFavorite(props: Props) {
-  const { article } = props;
+  const { article } = props
   const formattedDate = format(
     new Date(article.published_at),
-    "yyyy年MM月dd日",
+    'yyyy年MM月dd日',
     { locale: ja }
-  );
+  )
 
-  const randomId = Math.floor(Math.random() * 1000) + 1;
+  const randomId = Math.floor(Math.random() * 1000) + 1
 
   return (
     <motion.div
@@ -66,5 +66,5 @@ export default function BlogCardWithFavorite(props: Props) {
         </div>
       </div>
     </motion.div>
-  );
+  )
 }

@@ -1,7 +1,7 @@
-import type { Route } from "./+types/popular";
-import { Article, type ArticleJson } from "~/domain/Article";
-import { motion } from "framer-motion";
-import BlogCard from "~/components/BlogCard";
+import type { Route } from './+types/popular'
+import { Article, type ArticleJson } from '~/domain/Article'
+import { motion } from 'framer-motion'
+import BlogCard from '~/components/BlogCard'
 
 export async function loader({ params }: Route.LoaderArgs) {
   const res = await fetch(
@@ -11,8 +11,8 @@ export async function loader({ params }: Route.LoaderArgs) {
         Authorization: `Bearer ${process.env.QIITA_API_KEY}`,
       },
     }
-  );
-  const articlesJson: ArticleJson[] = await res.json();
+  )
+  const articlesJson: ArticleJson[] = await res.json()
   const articles = articlesJson.map(
     (articleJson) =>
       new Article(
@@ -22,13 +22,13 @@ export async function loader({ params }: Route.LoaderArgs) {
         articleJson.stocks_count,
         articleJson.created_at
       )
-  );
+  )
 
-  return { articles };
+  return { articles }
 }
 
 export default function Popular({ loaderData }: Route.ComponentProps) {
-  const { articles } = loaderData;
+  const { articles } = loaderData
   return (
     <div>
       <div className="flex-1 sm:ml-64">
@@ -38,7 +38,9 @@ export default function Popular({ loaderData }: Route.ComponentProps) {
           transition={{ duration: 0.5 }}
           className="container mx-auto px-4 py-8"
         >
-          <h2 className="mb-6 text-3xl font-bold text-gray-800">人気記事</h2>
+          <h2 className="mb-6 text-3xl font-bold text-gray-800 dark:text-gray-200">
+            人気記事
+          </h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {articles.map((article) => (
               <BlogCard key={article.url} article={article} />
@@ -47,5 +49,5 @@ export default function Popular({ loaderData }: Route.ComponentProps) {
         </motion.div>
       </div>
     </div>
-  );
+  )
 }

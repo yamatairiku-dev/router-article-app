@@ -1,26 +1,25 @@
-import { Article, type ArticleJson } from "~/domain/Article";
-import { useEffect, useRef } from "react";
-import { useFetcher, useLoaderData } from "react-router";
-import { SearchIcon } from "lucide-react";
-import BlogCardWithFavorite from "~/components/BlogCardWithFavorite";
-import { motion } from "framer-motion";
-import { searchLoader } from "./loader";
-import { searchAction } from "./action";
+import { Article, type ArticleJson } from '~/domain/Article'
+import { useEffect, useRef } from 'react'
+import { useFetcher, useLoaderData } from 'react-router'
+import { SearchIcon } from 'lucide-react'
+import BlogCardWithFavorite from '~/components/BlogCardWithFavorite'
+import { motion } from 'framer-motion'
+import { searchLoader } from './loader'
+import { searchAction } from './action'
 
 export const loader = searchLoader
 export const action = searchAction
 
-
 export default function Search() {
-  const formRef = useRef<HTMLFormElement>(null);
-  const fetcher = useFetcher<{ articles: Article[] }>();
-  const loader = useLoaderData<{ articles: Article[] }>();
-  const articles = fetcher.data?.articles || loader.articles;
+  const formRef = useRef<HTMLFormElement>(null)
+  const fetcher = useFetcher<{ articles: Article[] }>()
+  const loader = useLoaderData<{ articles: Article[] }>()
+  const articles = fetcher.data?.articles || loader.articles
   useEffect(() => {
-    if (fetcher.state === "idle") {
-      formRef.current?.reset();
+    if (fetcher.state === 'idle') {
+      formRef.current?.reset()
     }
-  }, [fetcher]);
+  }, [fetcher])
 
   return (
     <div className="flex sm:ml-64">
@@ -30,7 +29,9 @@ export default function Search() {
         transition={{ duration: 0.5 }}
         className="container mx-auto px-4 py-8"
       >
-        <h2 className="mb-6 text-3xl font-bold text-gray-800">記事検索</h2>
+        <h2 className="mb-6 text-3xl font-bold text-gray-800 dark:text-gray-200">
+          記事検索
+        </h2>
         <fetcher.Form
           ref={formRef}
           action="/search"
@@ -60,5 +61,5 @@ export default function Search() {
         </div>
       </motion.div>
     </div>
-  );
+  )
 }

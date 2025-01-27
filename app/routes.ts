@@ -4,13 +4,14 @@ import {
   layout,
   prefix,
   route,
-} from "@react-router/dev/routes";
+} from '@react-router/dev/routes'
 
 export default [
-  layout("layouts/sidemenu.tsx", [
-    index("routes/home/index.tsx"),
-    route("popular", "routes/popular.tsx"),
-    route("search", "routes/search/index.tsx"),
+  layout('layouts/sidemenu.tsx', [
+    index('routes/home/index.tsx'),
+    route('popular', 'routes/popular.tsx'),
+    route('search', 'routes/search/index.tsx'),
+    route('projects', 'routes/backlog/projects/index.tsx'),
   ]),
-  ...prefix("v1", [...prefix("systems", [route("ping", "routes/ping.tsx")])]),
-] satisfies RouteConfig;
+  ...prefix('v1', [...prefix('systems', [route('ping', 'routes/ping.tsx')])]),
+] satisfies RouteConfig

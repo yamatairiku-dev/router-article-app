@@ -3,5 +3,5 @@ export default function Ping() {
     <div>
       <h1>Ping</h1>
     </div>
-  );
+  )
 }
